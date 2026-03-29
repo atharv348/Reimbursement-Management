@@ -34,6 +34,24 @@ A robust, professional expense reimbursement system with a tiered approval workf
 - **AI/OCR**: Groq (Llama 4 Scout 17b).
 - **Database/Storage**: Supabase PostgreSQL & Storage.
 
-## Deployment
-- **Frontend**: Vercel
-- **Backend**: Render / Vercel (FastAPI Serverless)
+## Deployment Guide
+
+### Backend (Render)
+1.  Connect your GitHub repository to **Render**.
+2.  Create a new **Web Service**.
+3.  Set the **Root Directory** to the project root.
+4.  **Runtime**: Python 3.x
+5.  **Build Command**: `pip install -r requirements.txt`
+6.  **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+7.  Add your `.env` variables (SUPABASE_URL, SUPABASE_KEY, GROQ_API_KEY, etc.) in the Render dashboard.
+
+### Frontend (Vercel)
+1.  Connect your GitHub repository to **Vercel**.
+2.  Set the **Root Directory** to `frontend/`.
+3.  **Framework Preset**: Next.js
+4.  Add **Environment Variable**:
+    - `NEXT_PUBLIC_API_URL`: Your Render backend URL (e.g., `https://reimbursement-api.onrender.com`)
+5.  Deploy.
+
+---
+*Created for Odoo x VIT Pune Hackathon 26*

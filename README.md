@@ -1,58 +1,88 @@
-# Reimbursement Management System
+# ReimburseX - Smart Expense Management System
 
-## Problem Statement
-Companies often struggle with manual expense reimbursement processes that are time-consuming, error-prone, and lack transparency. There is no simple way to:
-- Define approval flows based on thresholds.
-- Manage multi-level approvals.
-- Support flexible approval rules.
+ReimburseX is a robust, AI-powered enterprise solution designed to modernize and secure the corporate reimbursement lifecycle. Built with a high-performance stack, it automates expense tracking, receipt scanning, and multi-tier approval workflows.
 
-## Solution
-A robust, professional expense reimbursement system with a tiered approval workflow and AI-powered OCR capabilities. The system automates the entire process from expense submission to final approval and financial reporting.
+## 🚀 Key Features
 
-### Core Features
-- **Authentication & User Management**: Role-based access for Employees, Managers, Finance, and Directors.
-- **AI-Powered OCR**: Automatic receipt scanning and form pre-filling using Llama 4 Scout.
-- **Tiered Sequential Workflow**:
-  - **< 10,000**: Manager only.
-  - **10,000 - 30,000**: Manager then Finance.
-  - **> 30,000**: Manager, Finance, then Director.
-- **Conditional Approval Rules**: Supports multi-level sequential approvals.
-- **Real-time Notifications**: Alerts for approval/rejection status.
-- **Financial Reporting**: Comprehensive Excel export with multi-tier status tracking.
-- **Premium UI/UX**: Modern dashboard with role-specific themes and a pop-up review system.
+### 1. AI-Powered OCR Scanning
+- **Llama 4 Scout Integration**: Automatically scans and extracts data from receipts (Amount, Vendor, Date, Category).
+- **Frictionless Submission**: Reduces manual data entry by 90%, allowing employees to submit claims in seconds.
 
-## Team - Odoo x VIT Pune Hackathon 26
+### 2. Tiered Sequential Approval Workflow
+Strict financial controls enforced by automated thresholds:
+- **Small Claims (< ₹10,000)**: Single-tier approval (Manager).
+- **Mid-Tier Claims (₹10,000 - ₹50,000)**: Two-tier approval (Manager → Finance Officer).
+- **High-Value Claims (> ₹50,000)**: Three-tier approval (Manager → Finance Officer → Director).
+
+### 3. Role-Based Dashboards
+- **High-Visibility Alerts**: "Action Required" section prominently displays pending approvals for Managers, Finance, and Directors.
+- **One-by-One Notifications**: Real-time alerts ensure the next person in the sequence is notified only after the previous approval is granted.
+
+### 4. Admin & Financial Reporting
+- **Company Directory**: Manage users, assign managers, and maintain organizational hierarchy.
+- **Excel Reporting**: One-click export of the entire reimbursement history for audits and accounting.
+
+---
+
+## 🛠️ Tech Stack
+- **Frontend**: [Next.js 15](https://nextjs.org/), Tailwind CSS, Lucide React, Axios.
+- **Backend**: [FastAPI](https://fastapi.tiangolo.com/) (Python), SQLAlchemy.
+- **Database/Storage**: [Supabase](https://supabase.com/) (PostgreSQL & Storage).
+- **AI/OCR**: Groq (Llama 4 Scout 17b).
+
+---
+
+## 👥 Team - Odoo x VIT Pune Hackathon 26
 - **Team Leader**: ATHARV JOSHI
 - **Team Members**:
   - Pratik Bugade
   - Vaishnavi Sambahji Patil
   - Jui Prashant Inamdar
 
-## Tech Stack
-- **Frontend**: Next.js 15, Tailwind CSS, Lucide React, Axios.
-- **Backend**: FastAPI (Python), SQLAlchemy, PostgreSQL (Supabase).
-- **AI/OCR**: Groq (Llama 4 Scout 17b).
-- **Database/Storage**: Supabase PostgreSQL & Storage.
+---
 
-## Deployment Guide (Vercel Only)
+## 💻 Setup & Installation
 
-You can deploy both the Frontend and the Backend on **Vercel** for a unified experience.
+### Backend Setup
+1. Clone the repository and navigate to the root directory.
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Configure your `.env` file with Supabase and Groq credentials.
+4. Run the backend:
+   ```bash
+   uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+   ```
 
-### **1. Backend (FastAPI on Vercel)**
-1.  Connect your GitHub repository to **Vercel**.
-2.  Import the project from the **Root Directory** (leave it blank).
-3.  Vercel will detect the `vercel.json` file automatically.
-4.  Add your `.env` variables in the Vercel dashboard:
-    - `DATABASE_URL`, `SUPABASE_URL`, `SUPABASE_KEY`, `GROQ_API_KEY`, `SECRET_KEY`, `ALGORITHM`.
-5.  Deploy. Your backend URL will be something like `https://reimbursement-management-backend.vercel.app`. **Copy this URL.**
+### Frontend Setup
+1. Navigate to the `frontend/` directory.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-### **2. Frontend (Next.js on Vercel)**
-1.  Connect the same GitHub repository to **Vercel** as a **New Project**.
-2.  Set the **Root Directory** to `frontend/`.
-3.  **Framework Preset**: Next.js.
-4.  Add **Environment Variable**:
-    - `NEXT_PUBLIC_API_URL`: Use the Backend URL you copied in the previous step (e.g., `https://reimbursement-management-backend.vercel.app`).
-5.  Deploy.
+---
+
+## 📂 Project Structure
+- `/app`: Backend logic, models, and API endpoints.
+- `/frontend`: Next.js application, components, and dashboard UI.
+- `vercel.json`: Deployment configuration for Vercel.
+
+---
+
+## 🔑 Access Directory (Test Credentials)
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Admin** | `admin@gmail.com` | `admin123` |
+| **Manager** | `manager@gmail.com` | `manager123` |
+| **Employee** | `employee@gmail.com` | `employee123` |
+| **Finance** | `Dixit345@abc.com` | `finance123` |
+| **Director** | `Manish32@abc.com` | `director123` |
 
 ---
 *Created for Odoo x VIT Pune Hackathon 26*

@@ -34,23 +34,24 @@ A robust, professional expense reimbursement system with a tiered approval workf
 - **AI/OCR**: Groq (Llama 4 Scout 17b).
 - **Database/Storage**: Supabase PostgreSQL & Storage.
 
-## Deployment Guide
+## Deployment Guide (Vercel Only)
 
-### Backend (Render)
-1.  Connect your GitHub repository to **Render**.
-2.  Create a new **Web Service**.
-3.  Set the **Root Directory** to the project root.
-4.  **Runtime**: Python 3.x
-5.  **Build Command**: `pip install -r requirements.txt`
-6.  **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-7.  Add your `.env` variables (SUPABASE_URL, SUPABASE_KEY, GROQ_API_KEY, etc.) in the Render dashboard.
+You can deploy both the Frontend and the Backend on **Vercel** for a unified experience.
 
-### Frontend (Vercel)
+### **1. Backend (FastAPI on Vercel)**
 1.  Connect your GitHub repository to **Vercel**.
+2.  Import the project from the **Root Directory** (leave it blank).
+3.  Vercel will detect the `vercel.json` file automatically.
+4.  Add your `.env` variables in the Vercel dashboard:
+    - `DATABASE_URL`, `SUPABASE_URL`, `SUPABASE_KEY`, `GROQ_API_KEY`, `SECRET_KEY`, `ALGORITHM`.
+5.  Deploy. Your backend URL will be something like `https://reimbursement-management-backend.vercel.app`. **Copy this URL.**
+
+### **2. Frontend (Next.js on Vercel)**
+1.  Connect the same GitHub repository to **Vercel** as a **New Project**.
 2.  Set the **Root Directory** to `frontend/`.
-3.  **Framework Preset**: Next.js
+3.  **Framework Preset**: Next.js.
 4.  Add **Environment Variable**:
-    - `NEXT_PUBLIC_API_URL`: Your Render backend URL (e.g., `https://reimbursement-api.onrender.com`)
+    - `NEXT_PUBLIC_API_URL`: Use the Backend URL you copied in the previous step (e.g., `https://reimbursement-management-backend.vercel.app`).
 5.  Deploy.
 
 ---

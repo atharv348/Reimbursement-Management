@@ -12,3 +12,7 @@ python-multipart
 alembic
 passlib[bcrypt]
 python-jose[cryptography]
+pandas
+openpyxl
+jinja2
+python-multipart

@@ -34,7 +34,8 @@ export default function ExpensesPage() {
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token")
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      const res = await axios.get(`${baseUrl}/api/users/me`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setUser(res.data)
@@ -46,7 +47,8 @@ export default function ExpensesPage() {
   const fetchExpenses = async () => {
     try {
       const token = localStorage.getItem("token")
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/expenses/history`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      const res = await axios.get(`${baseUrl}/api/expenses/history`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setExpenses(res.data)
@@ -63,7 +65,8 @@ export default function ExpensesPage() {
     if (!confirm("Are you sure you want to delete this expense claim?")) return
     try {
       const token = localStorage.getItem("token")
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/expenses/${expenseId}`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      await axios.delete(`${baseUrl}/api/expenses/${expenseId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       alert("Expense deleted successfully!")
@@ -85,7 +88,8 @@ export default function ExpensesPage() {
     
     try {
       const token = localStorage.getItem("token")
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/expenses/ocr`, ocrData, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      const res = await axios.post(`${baseUrl}/api/expenses/ocr`, ocrData, {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       })
       console.log("OCR Result:", res.data)
@@ -129,7 +133,8 @@ export default function ExpensesPage() {
 
     try {
       const token = localStorage.getItem("token")
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/expenses/submit`, submitData, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      await axios.post(`${baseUrl}/api/expenses/submit`, submitData, {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       })
       alert("Expense submitted successfully!")

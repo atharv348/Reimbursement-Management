@@ -39,10 +39,11 @@ export default function AdminPage() {
       
       const config = { headers: { Authorization: `Bearer ${token}` } }
       console.log("Fetching admin data...")
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
       
       const [usersRes, rulesRes] = await Promise.all([
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`, config),
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/rules`, config)
+        axios.get(`${baseUrl}/api/users`, config),
+        axios.get(`${baseUrl}/api/rules`, config)
       ])
       
       setUsers(usersRes.data)
@@ -67,7 +68,8 @@ export default function AdminPage() {
     e.preventDefault()
     try {
       const token = localStorage.getItem("token")
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/employees`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      await axios.post(`${baseUrl}/api/users/employees`, {
         email: userEmail,
         full_name: userFullName,
         password: "Password123!",
@@ -90,11 +92,12 @@ export default function AdminPage() {
     e.preventDefault()
     try {
       const token = localStorage.getItem("token")
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
       const config = {
         approver_ids: approverIds.split(",").map(id => parseInt(id.trim())),
         threshold_percentage: parseInt(threshold)
       }
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/rules/`, {
+      await axios.post(`${baseUrl}/api/rules/`, {
         name: ruleName,
         rule_type: ruleType,
         config: config
@@ -112,7 +115,8 @@ export default function AdminPage() {
     if (!confirm("Are you sure you want to remove this member?")) return
     try {
       const token = localStorage.getItem("token")
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      await axios.delete(`${baseUrl}/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       alert("Member removed successfully!")
@@ -211,6 +215,56 @@ export default function AdminPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Directory Table */}
+      <Card className="border-[#e0dcff] shadow-lg rounded-[24px] overflow-hidden bg-white mb-8">
+        <CardHeader className="bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] border-b border-[#f4f2ff] px-6 py-5">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg font-bold text-white font-syne flex items-center gap-2">
+              <span className="p-1.5 bg-white/20 rounded-lg text-white"><ShieldCheck size={18} /></span> Access Directory (Reference)
+            </CardTitle>
+            <div className="flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-white text-[10px] font-bold uppercase tracking-wider">
+              Quick Login Access
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-[#fafafe] text-left text-[11px] font-bold text-[#6b7280] uppercase tracking-widest border-b border-[#f4f2ff]">
+                  <th className="px-6 py-4">Role</th>
+                  <th className="px-6 py-4">Work Email</th>
+                  <th className="px-6 py-4">Password</th>
+                  <th className="px-6 py-4 text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#f4f2ff]">
+                {[
+                  { role: "Admin", email: "admin@gmail.com", pass: "admin123", color: "bg-[#d1fae5] text-[#065f46]" },
+                  { role: "Manager", email: "manager@gmail.com", pass: "manager123", color: "bg-[#e0f2fe] text-[#075985]" },
+                  { role: "Employee", email: "employee@gmail.com", pass: "employee123", color: "bg-[#f3f4f6] text-[#374151]" },
+                  { role: "Finance", email: "Dixit345@abc.com", pass: "finance123", color: "bg-[#fef3c7] text-[#92400e]" },
+                  { role: "Director", email: "Manish32@abc.com", pass: "director123", color: "bg-[#eef2ff] text-[#4f46e5]" }
+                ].map((cred, idx) => (
+                  <tr key={idx} className="hover:bg-[#fafafe] transition-colors">
+                    <td className="px-6 py-4">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${cred.color}`}>
+                        {cred.role}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-sm font-bold text-[#0d0a2e]">{cred.email}</td>
+                    <td className="px-6 py-4 text-sm font-mono text-[#4f46e5] font-bold bg-[#f5f7ff] rounded-lg">{cred.pass}</td>
+                    <td className="px-6 py-4 text-center">
+                      <span className="text-[10px] font-bold text-[#059669] bg-[#d1fae5] px-2 py-0.5 rounded-full uppercase tracking-tighter animate-pulse">Active</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Directory Table */}
       <Card className="border-[#e0dcff] shadow-lg rounded-[24px] overflow-hidden bg-white">

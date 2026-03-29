@@ -23,7 +23,8 @@ export default function DashboardPage() {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token")
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/expenses/history`, {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+        const res = await axios.get(`${baseUrl}/api/expenses/history`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         const expenses = res.data

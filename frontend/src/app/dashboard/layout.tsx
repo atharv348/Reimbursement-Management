@@ -114,10 +114,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     const fetchData = async () => {
       try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
         const [userRes, approvalsRes, notifRes] = await Promise.all([
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/approvals/pending`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/notifications`, { headers: { Authorization: `Bearer ${token}` } })
+          axios.get(`${baseUrl}/api/users/me`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${baseUrl}/api/approvals/pending`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${baseUrl}/api/users/notifications`, { headers: { Authorization: `Bearer ${token}` } })
         ])
         setUser(userRes.data)
         setPendingCount(approvalsRes.data.length)
@@ -135,7 +136,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const markAsRead = async (id: number) => {
     try {
       const token = localStorage.getItem("token")
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/notifications/${id}/read`, {}, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      await axios.post(`${baseUrl}/api/users/notifications/${id}/read`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setNotifications(notifications.map(n => n.id === id ? { ...n, is_read: true } : n))

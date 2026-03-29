@@ -37,16 +37,16 @@ export default function AuthPage() {
     }
     setLoading(true)
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
       if (isLogin) {
         const formData = new FormData()
         formData.append("username", email)
         formData.append("password", password)
-        const res = await axios.post(`${baseUrl}/auth/login`, formData)
+        const res = await axios.post(`${baseUrl}/api/auth/login`, formData)
         localStorage.setItem("token", res.data.access_token)
         window.location.href = "/dashboard"
       } else {
-        const res = await axios.post(`${baseUrl}/auth/signup`, {
+        const res = await axios.post(`${baseUrl}/api/auth/signup`, {
           user_in: { email, password, full_name: fullName },
           company_in: { name: companyName, country, base_currency: "USD" }
         })

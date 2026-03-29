@@ -68,7 +68,8 @@ export default function ApprovalsPanel({ title, description, roleType }: Approva
         window.location.href = "/"
         return
       }
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/approvals/pending`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      const res = await axios.get(`${baseUrl}/api/approvals/pending`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       
@@ -88,7 +89,8 @@ export default function ApprovalsPanel({ title, description, roleType }: Approva
   const fetchHistory = async () => {
     try {
       const token = localStorage.getItem("token")
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/approvals/history`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      const res = await axios.get(`${baseUrl}/api/approvals/history`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       
@@ -110,7 +112,8 @@ export default function ApprovalsPanel({ title, description, roleType }: Approva
         window.location.href = "/"
         return
       }
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/approvals/${approvalId}/${action}`, 
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      const res = await axios.post(`${baseUrl}/api/approvals/${approvalId}/${action}`, 
         { comments: comments[approvalId] || "" },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -141,7 +144,8 @@ export default function ApprovalsPanel({ title, description, roleType }: Approva
       }
       
       console.log("Starting Excel export...")
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/expenses/export`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ""
+      const response = await axios.get(`${baseUrl}/api/expenses/export`, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob'
       })
